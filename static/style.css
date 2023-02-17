@@ -1,0 +1,22 @@
+body {
+    color: blue;
+    text-align: center;
+}
+
+div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.gen{
+    color: #3c8621;
+    align-items: start;
+}
