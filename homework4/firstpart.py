@@ -1,12 +1,10 @@
 import csv
 from faker import Faker
 import requests
-import functools
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, render_template, request, abort
 )
-from werkzeug.security import check_password_hash, generate_password_hash
 
 bp = Blueprint('firstpart', __name__, url_prefix='/firstpart')
 
@@ -20,7 +18,7 @@ def requirements():
     """
     with open("requirements.txt", "r") as file:
         text = file.read().split("\n")
-        return render_template('requirements.html', text=text)
+        return render_template('firstpart/requirements.html', text=text)
 
 
 @bp.route('/generate-users/')
@@ -31,8 +29,8 @@ def user_generator():
     try:
         count = int(request.args.get("count", 100))
     except ValueError:
-        return render_template("error.html")
-    return render_template('generator.html', users=[(fake.name() + " " + fake.email()) for _ in range(count)])
+        return abort(404, f"Write only integer value")
+    return render_template('firstpart/generator.html', users=[(fake.name() + " " + fake.email()) for _ in range(count)])
 
 
 @bp.route('/mean/')
@@ -49,7 +47,7 @@ def height_weight():
             weight.append(float(row["Weight(Pounds)"]))
     mean_height = sum(height) / len(height) * 2.54
     mean_weight = sum(weight) / len(weight) * 2.20462
-    return render_template('mean.html', mean_height=mean_height, mean_weight=mean_weight)
+    return render_template('firstpart/mean.html', mean_height=mean_height, mean_weight=mean_weight)
 
 
 @bp.route('/space/')
@@ -58,4 +56,4 @@ def number_of_astronaut():
     This function return number of astronaut in space
     """
     read = requests.get('http://api.open-notify.org/astros.json')
-    return render_template("astronaut.html", astronaut=read.json()["number"])
+    return render_template("firstpart/astronaut.html", astronaut=read.json()["number"])

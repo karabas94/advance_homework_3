@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Users generator{% endblock %}
+
+{% block content %}
+    <div class="gen">
+        {% for your_list_element in users %}
+            <p>{{ your_list_element }} </p>
+        {% endfor %}
+    </div>
+{% endblock %}
