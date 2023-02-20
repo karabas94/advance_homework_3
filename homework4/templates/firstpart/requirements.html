@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Requirements{% endblock %}
+
+{% block content %}
+    <div class="list">
+        {% for your_list_element in text %}
+      <p>{{ your_list_element }} </p>
+        {% endfor %}
+    </div>
+{% endblock %}
