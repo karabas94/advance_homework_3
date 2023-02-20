@@ -1,13 +1,19 @@
-import requests
-from faker import Faker
-from flask import Flask, request, render_template
 import csv
+from faker import Faker
+import requests
+import functools
 
-app = Flask(__name__)
+from flask import (
+    Blueprint, flash, g, redirect, render_template, request, session, url_for
+)
+from werkzeug.security import check_password_hash, generate_password_hash
+
+bp = Blueprint('firstpart', __name__, url_prefix='/firstpart')
+
 fake = Faker()
 
 
-@app.route('/requirements/')
+@bp.route('/requirements/')
 def requirements():
     """
     This function returned content of requirement.txt file
@@ -17,7 +23,7 @@ def requirements():
         return render_template('requirements.html', text=text)
 
 
-@app.route('/generate-users/')
+@bp.route('/generate-users/')
 def user_generator():
     """
     This function returned generated users depend on get parameters(100 default)
@@ -29,7 +35,7 @@ def user_generator():
     return render_template('generator.html', users=[(fake.name() + " " + fake.email()) for _ in range(count)])
 
 
-@app.route('/mean/')
+@bp.route('/mean/')
 def height_weight():
     """
     This function returned mean of value height(cm) and weight(kg). The value taken from hw.csv file in inch and pounds resp.
@@ -46,7 +52,7 @@ def height_weight():
     return render_template('mean.html', mean_height=mean_height, mean_weight=mean_weight)
 
 
-@app.route('/space/')
+@bp.route('/space/')
 def number_of_astronaut():
     """
     This function return number of astronaut in space
