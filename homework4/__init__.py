@@ -20,4 +20,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from . import firstpart
+    app.register_blueprint(firstpart.bp)
+
     return app
