@@ -30,4 +30,7 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    from . import secondpart
+    app.register_blueprint(secondpart.bp)
+
     return app
