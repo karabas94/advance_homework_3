@@ -35,6 +35,21 @@ def init_db_command():
     click.echo('Initialized the database.')
 
 
+def load_fixtures():
+    db = get_db()
+
+    with current_app.open_resource('fixtures.sql') as file:
+        db.executescript(file.read().decode('utf8'))
+
+
+@click.command('load-fixtures')
+def load_fixtures_command():
+    """Inserting value from fixtures.sql to database"""
+    load_fixtures()
+    click.echo('Fixtures loaded')
+
+
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(load_fixtures_command)
