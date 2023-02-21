@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Tracks and length{% endblock %}
+
+{% block content %}
+    <div>
+        <table>
+            {%- for title, lenght in track_sec %}
+                <tr>
+                    <td>Title: {{ title }}</td>
+                    <td>Length: {{ lenght }} sec</td>
+                </tr>
+            {%- endfor %}
+        </table>
+    </div>
+
+{% endblock %}
