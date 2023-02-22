@@ -21,10 +21,11 @@ def quantity_tracks():
     return render_template('secondpart/quantity-tracks.html', track=track)
 
 
-@bp.route('/tracks/<genre>')
-def tracks_by_genre(genre):
+@bp.route('/tracks/<genre_title>')
+def tracks_by_genre(genre_title):
     '''this function returned view with number of tracks for view of db'''
-    track_genre = get_db().execute('SELECT COUNT(*) FROM tracks WHERE genre = ?', (genre,)).fetchone()[0]
+    track_genre = get_db().execute(
+        'SELECT count(*) FROM tracks inner JOIN genres ON tracks.genre_id = genres.id WHERE lower(genres.title) = lower(?)', (genre_title,)).fetchone()[0]
     return render_template('secondpart/quantity-tracks-genre.html', track_genre=track_genre)
 
 
